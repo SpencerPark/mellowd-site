@@ -1,0 +1,141 @@
+<html>
+<head>
+    <title>code-structure</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.22.0/codemirror.min.css" integrity="sha256-B4lcRQIA/hXjqRxuZHImRuHmb0IT1kscrY9mYJ7FsMs=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.22.0/theme/ambiance.min.css" integrity="sha256-ktyzhaUskWVTfFHilWbMGjsiXmi7GZkOXbOMW6wpt5w=" crossorigin="anonymous" />
+    
+    <link type="text/css" rel="stylesheet" href="../public/css/wiki.css"/>
+</head>
+<body>
+    <div class="container">
+        <h1 id="mellow-d-code-structure">Mellow D Code Structure</h1>
+<p class="lead">Source files can contain 3 main structures. Block/function declarations, block/function definitions and variable assignments.</p><h3 id="blocks">Blocks</h3>
+<p class="lead">Blocks can be thought of as adding a <strong>**performer**</strong> to your band. For developers with a programming background, a nice way to think of a `<code>block</code>` is as a thread or a process.</p><p>Each block is given a name and can either be a melodic block or a `<code>percussion</code>` block. This is decided when you declare it at the top of the code.</p>
+<hr>
+<h2 id="block-declarations">Block declarations</h2>
+<p>Here are both types of <strong>**block declaration**</strong>s, one for `<code>LeadGuitar</code>` and `<code>Drums</code>`</p>
+<div class="try-mellowd">
+                <pre>def block LeadGuitar
+def percussion block Drums
+</pre>
+                <pre style="display: none;">def block LeadGuitar
+def percussion block Drums
+
+LeadGuitar {
+    [a, b, c+1]*&lt;q&gt;
+}</pre>
+            </div>
+<p>You can tweak the performers a little bit with a `<code>block configuration</code>`. For example, the `<code>LeadGuitar</code>` should be playing a guitar!</p>
+<div class="try-mellowd">
+                <pre>def block LeadGuitar {
+    instrument: &quot;distortedGuitar&quot;
+}
+def percussion block Drums
+</pre>
+                <pre style="display: none;">def block LeadGuitar {
+    instrument: &quot;distortedGuitar&quot;
+}
+def percussion block Drums
+
+LeadGuitar {
+    [a, b, c+1]*&lt;q&gt;
+}</pre>
+            </div>
+<h2 id="block-definitions">Block definitions</h2>
+<p>Block definitions are where you can instruct the performer to create music. The contents of the blocks are the meat and potatoes of a Mellow D song. A full tutorial on that can be found on the <a href="#TODOstatement-wiki">statement wiki</a>. For a quick example lets tell the `<code>LeadGuitar</code>` to play a `<code>C chord</code>` for a `<code>whole note</code>`.</p>
+<div class="try-mellowd">
+                <pre>LeadGuitar {
+    [C]*&lt;w&gt;
+}</pre>
+                <pre style="display: none;">def block LeadGuitar {
+    instrument: &quot;distortedGuitar&quot;
+}
+def percussion block Drums
+
+LeadGuitar {
+    [C]*&lt;w&gt;
+}</pre>
+            </div>
+<p>There can be as many block definitions as desired to keep your code looking nice. Each set of instructions is performed <strong>**in order from top to bottom**</strong> by the performer.</p>
+<p>The performers play their own music at the same time and this makes adding some drums to the song pretty easy. In the example the `<code>LeadGuitar</code>` will play 1 `<code>C chords</code>` for a whole note while the `<code>Drums</code>` will hit the `<code>snare</code>` drum 4 times.</p>
+<div class="try-mellowd">
+                <pre>LeadGuitar {
+    [C]*&lt;w&gt;;
+}
+
+Drums {
+    [snare]*&lt;q, q, q, q&gt;;
+}</pre>
+                <pre style="display: none;">def block LeadGuitar {
+    instrument: &quot;distortedGuitar&quot;
+}
+def percussion block Drums
+
+LeadGuitar {
+    [C]*&lt;w&gt;;
+}
+
+Drums {
+    [snare]*&lt;q, q, q, q&gt;;
+}</pre>
+            </div>
+<div class="alert alert-success" role="alert"><h4>Test Yourself</h4>
+Try adding a second `<code>LeadGuitar</code>` block definition below the `<code>Drums</code>` to make the guitarist perform a `<code>G chord</code>` for a whole note.</div>
+<h2 id="overall">Overall</h2>
+<p>That covers the basic overall structure! There are many more things to cover but grasping blocks is the important part. Here is the code for the entire example covered in this overview with <strong>**comments**</strong> to layout a few of the other elements that can appear.</p>
+<div class="alert alert-info" role="alert"><h4>Comments</h4>
+Comments are sections of code that are only for the developer to read. <dl class="dl-horizontal">
+    <dt>Line comments:</dt> <dd>The rest of the line following `<code>//</code>` is a comment.</dd>
+    <dt>Multi-line comments:</dt> <dd>Everything between `<code>/*</code>` and `<code>*/</code>`is a comment.</dd>
+</dl></div>
+<div class="try-mellowd">
+                <pre>/* Import statements: These must go at the very top of the source
+import FUNCTION_NAME from SOURCE_NAME as REFERENCE_NAME
+*/
+
+//Block declarations: These must follow the imports if any exist
+def block LeadGuitar {
+    instrument: &quot;distortedGuitar&quot;
+}
+def percussion block Drums
+
+/* Block definitions, function definitions or variable assignments:
+   These can go in any order following the imports and declarations
+*/
+LeadGuitar {
+    [C]*&lt;w&gt;;
+}
+
+Drums {
+    [snare]*&lt;q, q, q, q&gt;;
+}</pre>
+                <pre style="display: none;">/* Import statements: These must go at the very top of the source
+import FUNCTION_NAME from SOURCE_NAME as REFERENCE_NAME
+*/
+
+//Block declarations: These must follow the imports if any exist
+def block LeadGuitar {
+    instrument: &quot;distortedGuitar&quot;
+}
+def percussion block Drums
+
+/* Block definitions, function definitions or variable assignments:
+   These can go in any order following the imports and declarations
+*/
+LeadGuitar {
+    [C]*&lt;w&gt;;
+}
+
+Drums {
+    [snare]*&lt;q, q, q, q&gt;;
+}</pre>
+            </div>
+
+    </div>
+    <script type="text/javascript" src="../wiki.js"></script>
+</body>
+</html>

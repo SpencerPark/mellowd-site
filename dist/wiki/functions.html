@@ -1,0 +1,71 @@
+<html>
+<head>
+    <title>functions</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.22.0/codemirror.min.css" integrity="sha256-B4lcRQIA/hXjqRxuZHImRuHmb0IT1kscrY9mYJ7FsMs=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.22.0/theme/ambiance.min.css" integrity="sha256-ktyzhaUskWVTfFHilWbMGjsiXmi7GZkOXbOMW6wpt5w=" crossorigin="anonymous" />
+    
+    <link type="text/css" rel="stylesheet" href="../public/css/wiki.css"/>
+</head>
+<body>
+    <div class="container">
+        <h1 id="functions">Functions</h1>
+<p class="lead">Functions are a great way to reduce code duplication. The concept should be familiar to developers with a programming background. Functions are sections of code that can be executed when desired to preform a specific task.</p><p class="lead">In Mellow D, functions are block fragments that can be executed inside other blocks.</p><h2 id="definitions">Definitions</h2>
+<p>A function is defined with a few keywords followed by the function&#39;s name, [parameters][parameters] and body.</p>
+<div class="try-mellowd">
+                <pre>def function myFunction =&gt; chord toPlay, rhythm beat {
+    [toPlay:0, toPlay:1, toPlay:2]*&lt;beat&gt;;
+}
+</pre>
+                <pre style="display: none;">def block Lead
+
+def function myFunction =&gt; chord toPlay, rhythm beat {
+    [toPlay:0, toPlay:1, toPlay:2]*&lt;beat&gt;;
+}
+Lead {
+    { C, &lt;q&gt; } =&gt; myFunction
+}</pre>
+            </div>
+<p>The code `<code>def function myFunction</code>` creates a function with the name `<code>myFunction</code>`.</p>
+<div class="alert alert-info" role="alert">Function names <strong>**can**</strong> be used multiple times to <strong>**overload**</strong> the name in a namespace. When this occurs the correct function body is determined at runtime based on the types of the arguments given and the argument names if needed as a fallback. <br> More information can be found at [function overloading][function overloading]</div>
+<p>The section following the `<code>=&gt;</code>`, is the [parameters][parameters] which in the example is a `<code>chord</code>` named `<code>toPlay</code>` and a `<code>rhythm</code>` named `<code>beat</code>`. Parameters are things that the caller must provide in order for the function to execute.</p>
+<p>The code inside the `<code>{</code>` and `<code>}</code>`makes up the function body. This is the code that is executed when the function is called.</p>
+<hr>
+<h3 id="parameters">Parameters</h3>
+<p>Parameters are descriptions of the elements that the function caller should provide to manipulate how the function performs. For example a function can ask that the caller provides a chord so that the function plays the given chord.</p>
+<div class="alert alert-warning" role="alert">From the perspective of the function body, parameters should be treated as [variables][variables] and the reader should be familiar with them before continuing with this section.</div>
+<p>A parameter does not require a type but if one can be applied, it is recommended that the developer specifies it. Types describe what the contents of the variable should be and may be one of the following keywords: `<code>chord</code>`, `<code>melody</code>`, or `<code>rhythm</code>`.</p>
+<div class="alert alert-info" role="alert">Specifying types help resolve [overloaded functions][function overloading]</div>
+<p>Parameters may also be optional meaning that it is not required for the parameter to be given. Optional parameters are declared by adding a `<code>?</code>` after the name. If a parameter is optional the developer can set a default value to be used when the value is absent. Following the `<code>?</code>` the developer may write `<code>-&gt;</code>` followed by the value of the parameter. For example the `<code>toPlay</code>` parameter has a type `<code>chord</code>` that if not given is set to be `<code>C#</code>`.</p>
+<div class="try-mellowd">
+                <pre>def function myFunction =&gt; chord toPlay? -&gt; C# {
+    [toPlay:0, toPlay:1, toPlay:2]*&lt;q&gt;
+}
+</pre>
+                <pre style="display: none;">def block Lead
+
+def function myFunction =&gt; chord toPlay? -&gt; C# {
+    [toPlay:0, toPlay:1, toPlay:2]*&lt;q&gt;
+}
+Lead {
+    { C } =&gt; myFunction
+}</pre>
+            </div>
+<div class="alert alert-success" role="alert"><h4>Test Yourself</h4> Try removing the `<code>C</code>` from the `<code>{ ... }</code>` in the function call in the 1Lead1 block and listen to what is played!</div>
+<p>To summarize the parameter syntax: `<code>type</code>` if applicable, `<code>parameter name</code>`, `<code>?</code>` if optional and `<code>-&gt; value</code>` if optional default value is desired.</p>
+<h2 id="calls">Calls</h2>
+<h3 id="function-calls">Function Calls</h3>
+<p>Functions are called with 2 components: the arguments, `<code>=&gt;</code>` and the function name. The arguments are bundled between `<code>{</code>` and `<code>}</code>`.</p>
+<hr>
+<h3 id="arguments">Arguments</h3>
+<p>Arguments are given to configure the function that is being executed. For example an argument may be a chord to play.</p>
+<div class="alert alert-warning" role="alert">Building arguments is assigning values to [parameters][parameters] and therefor an understanding of [parameters][parameters] is recommended before going over this section.</div>
+<p>A single argument follows the syntax: `<code>name:</code>` `<code>value</code>` where both are optional. Arguments are separated by a `<code>,</code>` if there is more than one.</p>
+
+    </div>
+    <script type="text/javascript" src="../wiki.js"></script>
+</body>
+</html>

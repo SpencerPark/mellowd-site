@@ -1,0 +1,345 @@
+<html>
+<head>
+    <title>primitives</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.22.0/codemirror.min.css" integrity="sha256-B4lcRQIA/hXjqRxuZHImRuHmb0IT1kscrY9mYJ7FsMs=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.22.0/theme/ambiance.min.css" integrity="sha256-ktyzhaUskWVTfFHilWbMGjsiXmi7GZkOXbOMW6wpt5w=" crossorigin="anonymous" />
+    
+    <link type="text/css" rel="stylesheet" href="../public/css/wiki.css"/>
+</head>
+<body>
+    <div class="container">
+        <h1 id="primitive-elements">Primitive Elements</h1>
+<p class="lead">Music is made up of 2 main elements notes and beats. A performer can play more than 1 note at a time to create a `<code>chord</code>`. The combination of a `<code>melody</code>` (a collection of notes or chords) with a `<code>rhythm</code>` (a collection of beats) creates a `<code>phrase</code>`. The `<code>phrase</code>` is what the performer plays.</p><h3 id="phrases">Phrases</h3>
+<p>Phrases are portions of the song that can actually be preformed. A phrase is a combination of a [melody][melodies] and [rhythm][rhythms] with the `<code>*</code>` operator. There are many examples in the sections to follow.</p>
+<h2 id="phrase-elements">Phrase Elements</h2>
+<h3 id="melodies">Melodies</h3>
+<p>Melodies are a collection of pitch descriptions. They describe what notes to perform and can therefor contain [notes][notes] or [chords][chords]. The notes and chords appear between `<code>[</code>` and `<code>]</code>` separated by `<code>,</code>`.</p>
+<hr>
+<h3 id="rhythms">Rhythms</h3>
+<p>Rhythms are a collection of beats that describe the duration that [notes][notes] or [chords][chords] should be played for. The beats appear between `<code>&lt;</code>` and `<code>&gt;</code>` separated by `<code>,</code>`.</p>
+<hr>
+<h3 id="building-phrases">Building Phrases</h3>
+<p>A phrase is a playable element constructed with the 2 components described above. The <strong>**left hand side**</strong> describes the pitches of the notes to preform and the <strong>**right hand side**</strong> describes the duration for which to play the pitches.</p>
+<p>The <strong>**left hand side**</strong> may be a melody or simply a chord. The <strong>**right hand side**</strong> must be a rhythm. Each element in the melody maps to a beat in the rhythm. For example the following code will play an `<code>a</code>` whole note, a `<code>b</code>` half note and a `<code>c</code>` quarter note.</p>
+<div class="try-mellowd">
+                <pre>    [a, b, c]*&lt;w, h, q&gt;
+</pre>
+                <pre style="display: none;">def block Lead
+
+Lead {
+    [a, b, c]*&lt;w, h, q&gt;
+}</pre>
+            </div>
+<p>If one side of the phrase is shorter than the other, that side will be repeated until both sides have the same length. For example the following will play a `<code>c</code>` scale alternating between quarter and eight notes.</p>
+<div class="try-mellowd">
+                <pre>    [c, e, f, g, a, b, c+1]*&lt;q, e&gt;
+</pre>
+                <pre style="display: none;">def block Lead
+
+Lead {
+    [c, e, f, g, a, b, c+1]*&lt;q, e&gt;
+}</pre>
+            </div>
+<p>This feature can be especially useful when a note or chord should be played multiple times. For example, repeating a `<code>C#</code>` chord for 4 quarter notes.</p>
+<div class="try-mellowd">
+                <pre>    [C#]*&lt;q, q, q, q&gt;
+</pre>
+                <pre style="display: none;">def block Lead
+
+Lead {
+    [C#]*&lt;q, q, q, q&gt;
+}</pre>
+            </div>
+<h3 id="melody-elements">Melody Elements</h3>
+<h3 id="notes">Notes</h3>
+<p>A single note looks like `<code>a</code>`. The note may be shifted up or down a semi-tone (sharp or flat) with `<code>#</code>` or `<code>$</code>`. This note can be shifted up or down an octave with `<code>+1</code>` or `<code>-1</code>` respectively.</p>
+<p>Try listening to the following by putting it in the editor with the button in the bottom right corner of the code block.</p>
+<div class="try-mellowd">
+                <pre>    [a, a$, a#, a+1, a$+1, a#+1]*&lt;q&gt;
+</pre>
+                <pre style="display: none;">def block Lead
+
+Lead {
+    [a, a$, a#, a+1, a$+1, a#+1]*&lt;q&gt;
+}</pre>
+            </div>
+<hr>
+<h3 id="chords">Chords</h3>
+<p>Chords are a collection of notes performed at the same time. You can build chords by putting [notes][notes] between `<code>(</code>` and `<code>)</code>` with a `<code>,</code>` separating each one. For example we can build a C major chord:</p>
+<div class="try-mellowd">
+                <pre>    [(c, e, g)]*&lt;q&gt;
+</pre>
+                <pre style="display: none;">def block Lead
+
+Lead {
+    [(c, e, g)]*&lt;q&gt;
+}</pre>
+            </div>
+<p>Chords follow a pattern with the intervals in between notes. A major chord is the root note followed by a major third (+4 semi tones) and a perfect fifth (+7 semi tones). Due to these patterns you can ask Mellow D to create the chord for you by simply supplying the root note and the chord type (by default it is a major chord).</p>
+<div class="try-mellowd">
+                <pre>    [(c, e, g), C, Cmaj]*&lt;h&gt;
+</pre>
+                <pre style="display: none;">def block Lead
+
+Lead {
+    [(c, e, g), C, Cmaj]*&lt;h&gt;
+}</pre>
+            </div>
+<p>To create a chord from the table use the format: `<code>upper-case note name</code>`, optionally `<code>&#39;#&#39; or &#39;$&#39;</code>` for a sharp or flat version, `<code>Identifier</code>`, with `<code>&#39;+&#39; or &#39;-&#39; a number</code>` to shift the chord up or down a number of octaves.</p>
+<p>Ex: `<code>A#dom7+1</code>` is the A sharp dominant 7th chord shifted 1 octave higher.</p>
+<h4 id="supported-chord-classes-">Supported chord classes:</h4>
+<table class="table">
+                <thead>
+                    <tr>
+<th><strong>**Identifier**</strong></th>
+<th style="text-align:center"><strong>**Chord**</strong></th>
+<th><strong>**Structure**</strong></th>
+</tr>
+
+                </thead>
+                <tbody>
+                    <tr>
+<td><em>_nothing_</em> <br> maj</td>
+<td style="text-align:center">Major</td>
+<td>(root, <span data-toggle="tooltip" data-placement="top" title="root + 4">
+                    major third
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 7">
+                    perfect fifth
+                </span>)</td>
+</tr>
+<tr>
+<td>m <br> min</td>
+<td style="text-align:center">Minor</td>
+<td>(root, <span data-toggle="tooltip" data-placement="top" title="root + 3">
+                    minor third
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 7">
+                    perfect fifth
+                </span>)</td>
+</tr>
+<tr>
+<td>aug</td>
+<td style="text-align:center">Augmented</td>
+<td>(root, <span data-toggle="tooltip" data-placement="top" title="root + 4">
+                    major third
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 8">
+                    augmented fifth
+                </span>)</td>
+</tr>
+<tr>
+<td>dim</td>
+<td style="text-align:center">Diminished</td>
+<td>(root, <span data-toggle="tooltip" data-placement="top" title="root + 3">
+                    minor third
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 6">
+                    diminished fifth
+                </span>)</td>
+</tr>
+<tr>
+<td>dim7</td>
+<td style="text-align:center">Diminished 7th</td>
+<td>(root, <span data-toggle="tooltip" data-placement="top" title="root + 3">
+                    minor third
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 6">
+                    diminished fifth
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 9">
+                    diminished seventh
+                </span>)</td>
+</tr>
+<tr>
+<td>maj7b5</td>
+<td style="text-align:center">Major 7th Flat 5</td>
+<td>(root, <span data-toggle="tooltip" data-placement="top" title="root + 3">
+                    minor third
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 6">
+                    diminished fifth
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 10">
+                    minor seventh
+                </span>)</td>
+</tr>
+<tr>
+<td>min7</td>
+<td style="text-align:center">Minor 7th</td>
+<td>(root, <span data-toggle="tooltip" data-placement="top" title="root + 3">
+                    minor third
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 7">
+                    perfect fifth
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 10">
+                    minor seventh
+                </span>)</td>
+</tr>
+<tr>
+<td>minmaj7</td>
+<td style="text-align:center">Minor Major 7th</td>
+<td>(root, <span data-toggle="tooltip" data-placement="top" title="root + 3">
+                    minor third
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 7">
+                    perfect fifth
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 11">
+                    major seventh
+                </span>)</td>
+</tr>
+<tr>
+<td>7 <br> dom7</td>
+<td style="text-align:center">Dominant 7</td>
+<td>(root, <span data-toggle="tooltip" data-placement="top" title="root + 4">
+                    major third
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 7">
+                    perfect fifth
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 10">
+                    minor seventh
+                </span>)</td>
+</tr>
+<tr>
+<td>maj7</td>
+<td style="text-align:center">Major 7th</td>
+<td>(root, <span data-toggle="tooltip" data-placement="top" title="root + 4">
+                    major third
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 7">
+                    perfect fifth
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 11">
+                    major seventh
+                </span>)</td>
+</tr>
+<tr>
+<td>aug7</td>
+<td style="text-align:center">Augmented 7th</td>
+<td>(root, <span data-toggle="tooltip" data-placement="top" title="root + 4">
+                    major third
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 8">
+                    augmented fifth
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 10">
+                    minor seventh
+                </span>)</td>
+</tr>
+<tr>
+<td>maj7s5</td>
+<td style="text-align:center">Major 7th Sharp 5</td>
+<td>(root, <span data-toggle="tooltip" data-placement="top" title="root + 4">
+                    major third
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 8">
+                    augmented fifth
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 11">
+                    major seventh
+                </span>)</td>
+</tr>
+<tr>
+<td>6 <br> maj6</td>
+<td style="text-align:center">Major 6th</td>
+<td>(root, <span data-toggle="tooltip" data-placement="top" title="root + 4">
+                    major third
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 7">
+                    perfect fifth
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 9">
+                    major sixth
+                </span>)</td>
+</tr>
+<tr>
+<td>min6</td>
+<td style="text-align:center">Minor 6th</td>
+<td>(root, <span data-toggle="tooltip" data-placement="top" title="root + 3">
+                    minor third
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 7">
+                    perfect fifth
+                </span>, <span data-toggle="tooltip" data-placement="top" title="root + 9">
+                    major sixth
+                </span>)</td>
+</tr>
+
+                </tbody>
+            </table>
+<h2 id="rhythmic-elements">Rhythmic Elements</h2>
+<h3 id="beats">Beats</h3>
+<p>The beats in order from longest to shortest are `<code>w</code>` (whole), `<code>h</code>` (half), `<code>q</code>` (quarter), `<code>e</code>` (eighth), `<code>s</code>` (sixteenth) and `<code>t</code>` (thirty-second). Each beat is half the duration of the previous on.</p>
+<p>For example, lets can play a `<code>d</code>` note for each of the available durations</p>
+<div class="try-mellowd">
+                <pre>    [d]*&lt;w, h, q, e, s, t&gt;
+</pre>
+                <pre style="display: none;">def block Lead
+
+Lead {
+    [d]*&lt;w, h, q, e, s, t&gt;
+}</pre>
+            </div>
+<hr>
+<h3 id="slurred-beats">Slurred Beats</h3>
+<p>In the example the listener can hear a distinct end to each of the notes. Sometimes the composer would prefer a more gentle transition between the notes. This is called a <strong>**slur**</strong> in music. By wrapping a portion of the rhythm between `<code>(</code>` and `<code>)</code>` the transition between those notes is smoother.</p>
+<div class="try-mellowd">
+                <pre>    [d]*&lt;q, q, q, q, (q, q, q, q)&gt;
+</pre>
+                <pre style="display: none;">def block Lead
+
+Lead {
+    [d]*&lt;q, q, q, q, (q, q, q, q)&gt;
+}</pre>
+            </div>
+<hr>
+<h3 id="dotted-beats">Dotted Beats</h3>
+<p>Another rhythmic construct used in music is a `<code>.</code>` (dot). It is used to extend the dotted beat by <sup>1</sup>&frasl;<sub>2</sub> of the original duration. A dotted half-note (`<code>h.</code>`) has the same duration as 1 and <sup>1</sup>&frasl;<sub>2</sub> half-notes. A double-dotted half-note (`<code>h..</code>`) has the duration of 1 and <sup>1</sup>&frasl;<sub>2</sub> half-notes plus <sup>3</sup>&frasl;<sub>4</sub> half-notes (half of a single dotted half note).</p>
+<div class="try-mellowd">
+                <pre>    [d]*&lt;h, h., h.., h...&gt;
+</pre>
+                <pre style="display: none;">def block Lead
+
+Lead {
+    [d]*&lt;h, h., h.., h...&gt;
+}</pre>
+            </div>
+<hr>
+<h3 id="tuplets">Tuplets</h3>
+<p>The most common tuplet is a <strong>**triplet**</strong> which plays 3 of the triplet beat in the time it takes to play 2.</p>
+<div class="try-mellowd">
+                <pre>
+    [d]*&lt;3q, q, q&gt;
+</pre>
+                <pre style="display: none;">def block Lead
+def percussion block Drums
+
+Lead {
+    [d]*&lt;3q, q, q&gt;
+}
+
+Drums {
+    [bass]*&lt;q, q, q, q&gt;
+}</pre>
+            </div>
+<p>A triplet is a `<code>3:2</code>` tuplet. If desired a `<code>3:1</code>` tuplet will perform 3 of the tuplet beat in the time it takes to play 1.</p>
+<div class="try-mellowd">
+                <pre>
+    [d]*&lt;3:2q, q, 3:1q&gt;
+</pre>
+                <pre style="display: none;">def block Lead
+def percussion block Drums
+
+Lead {
+    [d]*&lt;3:2q, q, 3:1q&gt;
+}
+
+Drums {
+    [bass]*&lt;q, q, q, q&gt;
+}</pre>
+            </div>
+<p>By default tuplets play the tuplet note the number of times described by the first number in the tuplet (3 in the previous examples) but sometimes a more specific division is desired. By putting the desired rhythm in `<code>[</code>` `<code>]</code>` the beats in the brackets are played with the tuplet in front of the brackets describing the tuplet.</p>
+<div class="try-mellowd">
+                <pre>
+    [g, f, f, d, f, c, b$-1]*&lt;q, 3[q, e, q, e], q, q&gt;
+</pre>
+                <pre style="display: none;">def block Lead
+def percussion block Drums
+
+Lead {
+    [g, f, f, d, f, c, b$-1]*&lt;q, 3[q, e, q, e], q, q&gt;
+}
+
+Drums {
+    [bass]*&lt;q, q, q, q&gt;
+}</pre>
+            </div>
+
+    </div>
+    <script type="text/javascript" src="../wiki.js"></script>
+</body>
+</html>
