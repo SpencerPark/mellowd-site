@@ -11,16 +11,16 @@ gulp.task("build", ["install assets", "compile wiki"], function () {
         .pipe(tsProject())
         .js
         .pipe(webpack(require('./webpack.config.js')(false)))
-        .pipe(gulp.dest("dist/"));
+        .pipe(gulp.dest("docs/"));
 });
 
 gulp.task("install assets", function () {
     return gulp.src('assets/**/*')
-        .pipe(gulp.dest('dist/public/'));
+        .pipe(gulp.dest('docs/public/'));
 });
 
 gulp.task("compile wiki", function () {
     return gulp.src('src/Wiki/pages/**/*.md')
         .pipe(loadWiki())
-        .pipe(gulp.dest("dist/wiki/"));
+        .pipe(gulp.dest("docs/wiki/"));
 });
